@@ -120,12 +120,12 @@ fi
 }
 function install_nginx(){
 
-    wget https://www.openssl.org/source/old/1.1.1/openssl-1.1.1a.tar.gz >/dev/null 2>&1
+    wget https://www.openssl.org/source/old/1.1.1/openssl-1.1.1a.tar.gz --no-check-certificate >/dev/null 2>&1
     tar xzvf openssl-1.1.1a.tar.gz >/dev/null 2>&1
     mkdir /etc/nginx
     mkdir /etc/nginx/ssl
     mkdir /etc/nginx/conf.d
-    wget https://nginx.org/download/nginx-1.15.8.tar.gz >/dev/null 2>&1
+    wget https://nginx.org/download/nginx-1.15.8.tar.gz --no-check-certificate >/dev/null 2>&1
     tar xf nginx-1.15.8.tar.gz && rm nginx-1.15.8.tar.gz >/dev/null 2>&1
     cd nginx-1.15.8
     ./configure --prefix=/etc/nginx --with-openssl=../openssl-1.1.1a --with-openssl-opt='enable-tls1_3' --with-http_v2_module --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_sub_module --with-stream --with-stream_ssl_module  >/dev/null 2>&1
@@ -158,7 +158,7 @@ http {
 }
 EOF
     curl https://get.acme.sh | sh
-    ~/.acme.sh/acme.sh  --issue  -d $your_domain  --standalone
+    ~/.acme.sh/acme.sh  --issue  -d $your_domain  --standalone --server letsencrypt
     ~/.acme.sh/acme.sh  --installcert  -d  $your_domain   \
         --key-file   /etc/nginx/ssl/$your_domain.key \
         --fullchain-file /etc/nginx/ssl/fullchain.cer
