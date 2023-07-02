@@ -157,6 +157,25 @@ http {
     include /etc/nginx/conf.d/*.conf;
 }
 EOF
+
+cat > /etc/nginx/conf.d/default.conf<<-EOF
+server {
+    listen       80;
+    server_name  $domain;
+    root /etc/nginx/html;
+    index index.php index.html index.htm;
+    location / {
+        try_files \$uri \$uri/ /index.php?\$args;
+    }
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /etc/nginx/html;
+    }
+}
+EOF
+
+/etc/nginx/sbin/nginx
+
     curl https://get.acme.sh | sh
     ~/.acme.sh/acme.sh  --issue  -d $your_domain  --standalone --server letsencrypt
     ~/.acme.sh/acme.sh  --installcert  -d  $your_domain   \
