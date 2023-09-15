@@ -177,8 +177,8 @@ EOF
 /etc/nginx/sbin/nginx
 
     curl -k https://get.acme.sh | sh
-    ~/.acme.sh/acme.sh  --issue  -d $your_domain  --standalone --server letsencrypt
-    ~/.acme.sh/acme.sh  --installcert  -d  $your_domain   \
+    ~/.acme.sh/acme.sh --insecure --issue  -d $your_domain  --standalone --server letsencrypt
+    ~/.acme.sh/acme.sh --insecure --installcert  -d  $your_domain   \
         --key-file   /etc/nginx/ssl/$your_domain.key \
         --fullchain-file /etc/nginx/ssl/fullchain.cer
     newpath=$(cat /dev/urandom | head -1 | md5sum | head -c 4)
