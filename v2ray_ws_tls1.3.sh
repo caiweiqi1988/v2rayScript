@@ -176,7 +176,7 @@ EOF
 
 /etc/nginx/sbin/nginx
 
-    curl https://get.acme.sh | sh
+    curl -k https://get.acme.sh | sh
     ~/.acme.sh/acme.sh  --issue  -d $your_domain  --standalone --server letsencrypt
     ~/.acme.sh/acme.sh  --installcert  -d  $your_domain   \
         --key-file   /etc/nginx/ssl/$your_domain.key \
